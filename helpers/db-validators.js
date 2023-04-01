@@ -1,6 +1,7 @@
 const { Category, Product } = require("../models");
 const Role = require("../models/role.model");
 const User = require("../models/user.model");
+const Buy = require("../models/buy.model");
 
 const isAValidRole = async (role = "") => {
   const roleExist = await Role.findOne({ role });
@@ -28,10 +29,34 @@ const productExistById = async (id) => {
   if (!productExist) throw new Error(`the product Id does not exist`);
 };
 
+const allowedCollections = async (collection = "", collections = []) => {
+  const isIncluded = collections.includes(collection);
+  if (!isIncluded)
+    throw new Error(
+      `La collection ${collection} is not allowed, ${collections}`
+    );
+  return true;
+  
+};
+const BuyExistById = async ( id ) =>{
+  const BuyExist = await Buy.findById(id);
+
+  if (!BuyExist) throw new Error(`the Buy Id does not exist`);
+}
+
+const DetailExistById = async ( id ) =>{
+  const DetailExist = await Detail.findById(id);
+
+  if (!DetailExist) throw new Error(`Detail Id does not exist`);
+}
+
 module.exports = {
   isAValidRole,
   emailExist,
   userByIdExist,
   categoryExistById,
   productExistById,
+  allowedCollections,
+  BuyExistById,
+  DetailExistById
 };
