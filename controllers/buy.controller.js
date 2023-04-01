@@ -53,7 +53,7 @@ const getBuy= async (req, res = response) => {
   
     const buy = await Buy.findByIdAndUpdate(id, data);
   
-    res.json(buy);
+    res.status(200).json(buy);
   };
 
   const deleteBuy = async (req, res) => {

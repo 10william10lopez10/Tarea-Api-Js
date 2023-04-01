@@ -1,23 +1,27 @@
-const { Router } = require("express");
-const { check } = require("express-validator");
+const {
+  Router
+} = require("express");
+const {
+  check
+} = require("express-validator");
 
 const {
-    validateFields,
-    validateJWT,
-  } = require("../middleware");
-  
-  const {
-    productExistById,
-    DetailExistById,
-    BuyExistById,
-  } = require("../helpers/db-validators");
+  validateFields,
+  validateJWT,
+} = require("../middleware");
 
-  const {
-    getDetail,
-    getDetailById,
-    createDetail,
-    updateDetail,
-  } = require("../controllers/detail.controller");
+const {
+  productExistById,
+  DetailExistById,
+  BuyExistById,
+} = require("../helpers/db-validators");
+
+const {
+  getDetail,
+  getDetailById,
+  createDetail,
+  updateDetail,
+} = require("../controllers/Detail.controller");
 
 
 const router = Router();
@@ -27,14 +31,14 @@ router.get("/", getDetail);
 
 router.get("/:id",
   [
-    check("id","this id does not exist").isMongoId(),
+    check("id", "this id does not exist").isMongoId(),
     check("id").custom(DetailExistById),
     validateFields
   ],
-   getDetailById);
+  getDetailById);
 
 
-  router.post("/",
+router.post("/",
   [
     validateJWT,
     check("buy", "Buy dont can be empty").not().isEmpty(),
@@ -45,14 +49,14 @@ router.get("/:id",
     check("product", "This is not mongoId").isMongoId(),
     check("product").custom(productExistById),
     validateFields
-  ],  
+  ],
   createDetail);
 
 
-  router.put("/:id",
+router.put("/:id",
   [
     validateJWT,
-    check("id","this detail doesnt exist").isMongoId(),
+    check("id", "this detail doesnt exist").isMongoId(),
     check("id").custom(DetailExistById),
     check("buy", "Buy dont can be empty").not().isEmpty(),
     check("buy", "This is not mongoId").isMongoId(),
@@ -62,8 +66,8 @@ router.get("/:id",
     check("product", "This is not mongoId").isMongoId(),
     check("product").custom(productExistById),
     validateFields
-  ], 
-  updateDetail) ;
+  ],
+  updateDetail);
 
 
 module.exports = router;

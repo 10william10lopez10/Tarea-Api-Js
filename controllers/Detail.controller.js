@@ -39,7 +39,7 @@ const getDetail= async (req, res = response) => {
     if (countDetailByBuy === 10){
         return res.status(400).json({Error:"10 product alrigth exist"})
     }
-    if (quantity === 7 ){
+    if (quantity > 7 ){
         return res.status(400).json({Error:"only 7 units are allowed"})
     }
 
@@ -56,7 +56,7 @@ const getDetail= async (req, res = response) => {
   
     const detail = new Detail(data);
     await detail.save();
-    res.status(200).json(detail);
+    return res.status(200).json(detail);
   };
 
   const updateDetail = async (req, res) => {
@@ -64,7 +64,7 @@ const getDetail= async (req, res = response) => {
     const { buy, product, quantity } = req.body;
     const {precio} = await Product.findById(product); 
     const total = quantity*precio;
-    if (quantity === 7 ){
+    if (quantity > 7 ){
         return res.status(400).json({Error:"only 7 units are must"})
     }
 
@@ -80,7 +80,7 @@ const getDetail= async (req, res = response) => {
     const UpdatedBuy = await Buy.findByIdAndUpdate(buy, {total:NewBuyTotal})
   
     const detail = await Detail.findByIdAndUpdate(id, data);
-    res.status(200).json(detail);
+    return res.status(200).json(detail);
   };
 
   const deleteDetail = async (req, res) => {

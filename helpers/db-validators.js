@@ -2,6 +2,7 @@ const { Category, Product } = require("../models");
 const Role = require("../models/role.model");
 const User = require("../models/user.model");
 const Buy = require("../models/buy.model");
+const Detail = require("../models/detail.model");
 
 const isAValidRole = async (role = "") => {
   const roleExist = await Role.findOne({ role });
@@ -46,7 +47,6 @@ const BuyExistById = async ( id ) =>{
 
 const DetailExistById = async ( id ) =>{
   const DetailExist = await Detail.findById(id);
-
   if (!DetailExist) throw new Error(`Detail Id does not exist`);
 }
 
@@ -58,5 +58,5 @@ module.exports = {
   productExistById,
   allowedCollections,
   BuyExistById,
-  DetailExistById
+  DetailExistById,
 };
